@@ -1,5 +1,6 @@
 import json
 from difflib import SequenceMatcher
+from difflib import get_close_matches  #using this as it has a return max paramter(instead of if loop printing all)
 
 data = json.load(open("data_file.json","r"))
 
@@ -15,11 +16,11 @@ def findWord():
         
 
 def similarWord(word):
-    alternitives = []
-    for words in data:
-        s = SequenceMatcher(None,word,words)
-        if s.quick_ratio() > 0.75:
-            alternitives.append(words)
+
+    alternitives = get_close_matches(word,data.keys(), n = 5)
+
+        # if s.quick_ratio() > 0.75:
+        # alternitives.append(words)
     return alternitives
 
 print(findWord())
