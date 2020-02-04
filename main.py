@@ -8,21 +8,39 @@ data = json.load(open("data_file.json","r"))
 def findWord():
     print("Welcome to Command Line Dictionary!")
     print("Type exit() to escape")
-    word = input("Enter a word...\n")
-    word.lower()
-    if word in data:
-        return data[word]
-    else:
-        print("sorry word not found")
-        print("Did you mean any of these words?")
-        return similarWord(word)
+    while True:
+        word = input("Enter a word...\n")
+        word = word.lower()
+        if word == "exit()":
+            sys.exit()
+        if word in data:
+            print(data[word])
+        else:
+            print("Could not find word")
+            lst = similarWord(word)
+            if len(lst) == 0:
+                 print("Sorry, no similar words found.")
+            else:
+                print("Enter Yes or No to the following questions")
+                for i in range(len(lst)):
+                    choice = input("Did you mean %s?\n" % lst[i])
+                    if 'y' in choice.lower():
+                        print(data[lst[i]])
+                        break
+                    elif i == len(lst) - 1:
+                        print("This word doesn't seem to exist, try again!")
+                    
+
+
         
 
 def similarWord(word):
-
-    alternitives = get_close_matches(word,data.keys(), n = 5)
+    alternitives = get_close_matches(word,data.keys(), n = 5, cutoff = 0.7)
         # if s.quick_ratio() > 0.75:
         # alternitives.append(words)
     return alternitives
 
-print(findWord())
+
+
+
+findWord()
