@@ -14,6 +14,11 @@ def findWord():
             for item in data[word]:
                 print(item)       #check for Proper nouns before coverting to lower
             continue
+        word = word.upper()
+        if word in data:
+            for item in data[word]:
+                print(item)
+            continue
         word = word.lower()
         if word == "exit()":
             sys.exit()
